@@ -109,6 +109,7 @@ public class RoundRobin {
 
 
     public void execucao (){
+        LinkedList<Processo> auxiliar = new LinkedList<>();
         int tempoAtual = 1;
         //prioridade atual
         int i = 0;
@@ -118,28 +119,47 @@ public class RoundRobin {
         processosPorPrioridade = ordenarListasDeProcessos(processosPorPrioridade, Lista);
         while(!processosPorPrioridade.isEmpty() ){
             if(tempoDeAumento % tempoAtual == 0){
+                System.out.println();
 
-            } else if(tempoDeAumento % quantum == 0) {
-                j++;
+            } else if(tempoAtual % quantum == 0) {
+                System.out.println("Quantum atingido");
+                auxiliar.add(0, processosPorPrioridade.get(i).get(j));
+                processosPorPrioridade.get(i).remove(j);
+                System.out.println("Processo: " + auxiliar.get(0).getNome() + " removido do começo");
+                processosPorPrioridade.get(i).add(auxiliar.get(0));
+                auxiliar.remove(0);
+                System.out.println("Processo: " + processosPorPrioridade.get(i).getLast().getNome() + " movido ao fim da fila");
+                System.out.println("Processo no inicio: " + processosPorPrioridade.get(i).getFirst().getNome());
+
+
                 processosPorPrioridade.get(i).get(j).executarProcesso();
+                System.out.println("Processo: " + processosPorPrioridade.get(i).get(j).getNome() + "executado em 1 unidade de tempo");
 
-                if(processosPorPrioridade.get(i).get(j).getTempoExecucao() <= 0){
+                if(processosPorPrioridade.get(i).get(0).getTempoExecucao() <= 0){
+                    System.out.println("Processo: " + processosPorPrioridade.get(i).getFirst().getNome() + "Foi finalizado");
                     processosPorPrioridade.get(i).remove(j);
                     if(processosPorPrioridade.get(i).isEmpty()){
                         i++;
+                        System.out.println("Lista de Prioridade vazia, mudando para prioridade " + i);
+
                     }
                 }
             } else {
                 processosPorPrioridade.get(i).get(j).executarProcesso();
+                System.out.println("Processo: " + processosPorPrioridade.get(i).get(j).getNome() + "executado em 1 unidade de tempo");
 
-                if(processosPorPrioridade.get(i).get(j).getTempoExecucao() <= 0){
+                if(processosPorPrioridade.get(i).get(0).getTempoExecucao() <= 0){
+                    System.out.println("Processo: " + processosPorPrioridade.get(i).getFirst().getNome() + "Foi finalizado");
                     processosPorPrioridade.get(i).remove(j);
                     if(processosPorPrioridade.get(i).isEmpty()){
                         i++;
+                        System.out.println("Lista de Prioridade vazia, mudando para prioridade " + i);
+
                     }
                 }
             }
             tempoAtual++;
+            System.out.println("Tempo atual: " + tempoAtual);
         }
     }
 
