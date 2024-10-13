@@ -12,6 +12,10 @@ public class FiFo {
         fila.add(p);
     }
 
+
+
+
+
     public void executar(){
         int tamanho = fila.size();
         for (int i = 0; i < tamanho; i++) {
