@@ -3,7 +3,6 @@ import java.util.Objects;
 public class Processo {
     private String nome;
     private int tempoExecucao;
-    private int tempoRestante;
     private int prioridade;
 
 
@@ -11,7 +10,6 @@ public class Processo {
     public Processo(String nome, int tempoExecucao, int prioridade) {
         this.nome = nome;
         this.tempoExecucao = tempoExecucao;
-        this.tempoRestante = tempoExecucao;
         this.prioridade = prioridade;
     }
 
@@ -31,13 +29,6 @@ public class Processo {
         this.tempoExecucao = tempoExecucao;
     }
 
-    public int getTempoRestante() {
-        return tempoRestante;
-    }
-
-    public void setTempoRestante(int tempoRestante) {
-        this.tempoRestante = tempoRestante;
-    }
 
     public int getPrioridade() {
         return prioridade;
