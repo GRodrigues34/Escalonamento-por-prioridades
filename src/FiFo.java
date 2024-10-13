@@ -12,10 +12,6 @@ public class FiFo {
         fila.add(p);
     }
 
-    public void removerProcesso() {
-        fila.remove(0);
-    }
-
     public void executar(){
         int tamanho = fila.size();
         for (int i = 0; i < tamanho; i++) {
@@ -25,6 +21,7 @@ public class FiFo {
            fila.remove(0);
         }
         System.out.println("Escalonamento FIFO executado com sucesso!. Tempo total = " + this.tempoTotal + ". Numero de processos: " + tamanho);
+        this.tempoTotal = 0;
     }
 
 

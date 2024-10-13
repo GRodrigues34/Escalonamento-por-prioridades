@@ -2,12 +2,14 @@ public class Processo {
     private String nome;
     private int tempoExecucao;
     private int tempoRestante;
+    private int prioridade;
 
 
-    public Processo(String nome, int tempoExecucao) {
+    public Processo(String nome, int tempoExecucao, int prioridade) {
         this.nome = nome;
         this.tempoExecucao = tempoExecucao;
         this.tempoRestante = tempoExecucao;
+        this.prioridade = prioridade;
     }
 
     public String getNome() {
@@ -34,4 +36,11 @@ public class Processo {
         this.tempoRestante = tempoRestante;
     }
 
+    public int getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(int prioridade) {
+        this.prioridade = prioridade;
+    }
 }
