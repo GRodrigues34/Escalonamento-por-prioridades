@@ -1,8 +1,11 @@
+import java.util.Objects;
+
 public class Processo {
     private String nome;
     private int tempoExecucao;
     private int tempoRestante;
     private int prioridade;
+
 
 
     public Processo(String nome, int tempoExecucao, int prioridade) {
@@ -46,5 +49,18 @@ public class Processo {
 
     public void executarProcesso(){
         this.tempoExecucao += -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Processo processo = (Processo) o;
+        return nome == processo.nome;  // Compara por ID
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome);  // Gera hash baseado no ID
     }
 }

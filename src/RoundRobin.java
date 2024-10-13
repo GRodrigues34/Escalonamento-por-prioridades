@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 public class RoundRobin {
     LinkedList<Processo> listaProcessos = new LinkedList<>();
     private int quantum;
@@ -101,12 +102,12 @@ public class RoundRobin {
 
 
     // Função genérica para imprimir valores de uma matriz
-    public static void printMatriz(LinkedList<LinkedList<Processo>> matriz) {
+    public void printMatriz(LinkedList<LinkedList<Processo>> matriz) {
         for (int i = 0; i < matriz.size(); i++) {
             LinkedList<Processo> linha = matriz.get(i);
-            System.out.println("Linha " + i);
+            System.out.println("Prioridade: " + (numeroDePrioridades - i));
             for (int j = 0; j < linha.size(); j++) {
-                System.out.print("Processo " + linha.get(j).getNome() + " Prioridade: " + linha.get(j).getPrioridade() + " ");
+                System.out.print(" Processo: " + linha.get(j).getNome() + ",");
             }
             System.out.println(); // Pula para a próxima linha após imprimir uma linha da matriz
         }
@@ -118,16 +119,18 @@ public class RoundRobin {
         int contagemAumento = 0;
         int contagemQuantum = 0;
         int tempoAtual = 0;
+        int processosRestantes = listaProcessos.size();
         //prioridade atual
         int i = 0;
         //processo atual
         int j = 0;
         LinkedList<Processo> Lista = organizarProcessosPorPrioridade(listaProcessos);
         processosPorPrioridade = ordenarListasDeProcessos(processosPorPrioridade, Lista);
-        while(!processosPorPrioridade.getLast().isEmpty()){
-            if(false) {
+        while(processosRestantes > 0){
+            if(contagemAumento == tempoDeAumento) {
                 System.out.println("tempo de aumento atingido, aumentando prioridade de processos");
-                processosPorPrioridade = aumentoDePrioridade(processosPorPrioridade);
+                LinkedList<LinkedList<Processo>> auxiliar1 = processosPorPrioridade;
+                processosPorPrioridade = aumentoDePrioridade(auxiliar1);
                 contagemAumento = 0;
             }
             if(contagemQuantum == quantum) {
@@ -149,6 +152,7 @@ public class RoundRobin {
                     if(processosPorPrioridade.get(i).get(0).getTempoExecucao() <= 0){
                         System.out.println("Processo: " + processosPorPrioridade.get(i).getFirst().getNome() + " Foi finalizado");
                         processosPorPrioridade.get(i).remove(j);
+                        processosRestantes --;
                         if(processosPorPrioridade.get(i).isEmpty()){
                             i++;
                             System.out.println("Lista de Prioridade vazia, mudando para prioridade " + (numeroDePrioridades - i - 1));
@@ -162,9 +166,11 @@ public class RoundRobin {
                 if(processosPorPrioridade.get(i).get(0).getTempoExecucao() <= 0){
                     System.out.println("Processo: " + processosPorPrioridade.get(i).getFirst().getNome() + " Foi finalizado");
                     processosPorPrioridade.get(i).remove(j);
+                    processosRestantes --;
                     if(processosPorPrioridade.get(i).isEmpty()){
                         System.out.println("Lista de Prioridade vazia, mudando para prioridade " + (numeroDePrioridades - i - 1));;
                         i++;
+
                     }
                 }
             }
@@ -173,7 +179,10 @@ public class RoundRobin {
             contagemQuantum++;
             System.out.println("Tempo atual: " + tempoAtual);
 
+
+
         }
+        System.out.println("Processos executados com sucesso!");
     }
 
     public LinkedList<LinkedList<Processo>> getProcessosPorPrioridade() {
@@ -184,35 +193,35 @@ public class RoundRobin {
         this.processosPorPrioridade = processosPorPrioridade;
     }
 
-    //aumenta a prioridade de todos os processos existentes.
     public LinkedList<LinkedList<Processo>> aumentoDePrioridade(LinkedList<LinkedList<Processo>> matriz) {
-        System.out.println("Matriz original: ");
-        printMatriz(matriz);
-
-        if(matriz.isEmpty()){
-            return matriz;
+        if (matriz.isEmpty() || matriz.getFirst().isEmpty()) {
+            return matriz;  // Se a matriz estiver vazia, não há nada para mover
         }
 
+        // Percorre a matriz a partir da segunda linha
         for (int i = 1; i < matriz.size(); i++) {
             LinkedList<Processo> linhaAtual = matriz.get(i);
             LinkedList<Processo> linhaAcima = matriz.get(i - 1);
 
-            // Concatenar os elementos da linha atual na linha acima
-            linhaAcima.addAll(linhaAtual);
+            // Utilizamos um iterator para evitar ConcurrentModificationException ao remover elementos
+            Iterator<Processo> iterator = linhaAtual.iterator();
+            while (iterator.hasNext()) {
+                Processo processo = iterator.next();
+                if (!linhaAcima.contains(processo)) {
+                    linhaAcima.add(processo);  // Adiciona à linha acima
+                    iterator.remove();  // Remove da linha atual
+                }
+            }
         }
 
-        // Limpa a última linha
-        LinkedList<Processo> ultimaLinha = matriz.getLast();
-        for(int i = 0; i < matriz.getLast().size(); i++){
-            matriz.getLast().remove(i);
-        }
-          // Limpa a última linha
-        System.out.println("Matriz aumentada");
+        // Limpa a última linha após a movimentação
+        matriz.getLast().clear();
+
         printMatriz(matriz);
-
         return matriz;
-        }
-
     }
+
+
+}
 
 

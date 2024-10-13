@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 public class Main {
     public static void main(String[] args) {
     RoundRobin r = new RoundRobin();
@@ -24,15 +25,12 @@ public class Main {
 
     LinkedList<Processo> processos = new LinkedList<>();
     processos = r.organizarProcessosPorPrioridade(r.getListaProcessos());
-    System.out.println(processos);
 
     LinkedList<LinkedList<Processo>> matriz = new LinkedList<>();
     matriz = r.ordenarListasDeProcessos(matriz, processos);
-    System.out.println(matriz);
 
 
         r.execucao();
-
 
 
 
