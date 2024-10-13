@@ -43,4 +43,8 @@ public class Processo {
     public void setPrioridade(int prioridade) {
         this.prioridade = prioridade;
     }
+
+    public void executarProcesso(){
+        this.tempoExecucao += -1;
+    }
 }

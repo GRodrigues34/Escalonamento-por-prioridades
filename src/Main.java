@@ -17,6 +17,11 @@ public class Main {
     r.adicionaProcesso(P5);
     r.adicionaProcesso(P6);
 
+
+    r.setNumeroDePrioridades(4);
+
+
+
     LinkedList<Processo> teste = new LinkedList<>();
 
     for(int i = 0; i < r.getListaProcessos().size(); i++){
@@ -31,12 +36,31 @@ public class Main {
             System.out.println("Processo: " + r.getListaProcessos().get(i).getNome());
         }
 
-     teste = r.separarPorPrioridade(r.getListaProcessos(), 2);
+        teste = r.separarPorPrioridade(r.getListaProcessos(), 2);
 
         System.out.println("Separação Feita");
         for(int i = 0; i < teste.size(); i++){
             System.out.println("Processo: " + teste.get(i).getNome() + ". Prioridade: " + teste.get(i).getPrioridade());
         }
 
+        LinkedList<Processo> testeAux = r.organizarProcessosPorPrioridade(r.getListaProcessos());
+
+        System.out.println("verificando testeAux");
+
+        for(int i = 0; i < testeAux.size(); i++){
+            System.out.println("Processo: " + testeAux.get(i).getNome() + ". Prioridade: " + testeAux.get(i).getPrioridade());
+        }
+
+
+        LinkedList<LinkedList<Processo>> teste2 = r.ordenarListasDeProcessos(r.getProcessosPorPrioridade(), testeAux);
+
+
+        System.out.println(teste2.size());
+
+        r.printMatriz(teste2);
+
+
+
     }
+
 }
