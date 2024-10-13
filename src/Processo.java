@@ -5,8 +5,7 @@ public class Processo {
     private int tempoExecucao;
     private int prioridade;
 
-
-
+    //getters e setters
     public Processo(String nome, int tempoExecucao, int prioridade) {
         this.nome = nome;
         this.tempoExecucao = tempoExecucao;
@@ -41,7 +40,7 @@ public class Processo {
     public void executarProcesso(){
         this.tempoExecucao += -1;
     }
-
+    //funções genericas equals e hash code para movimentação de processos na matriz, garantido remoções e adições.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
