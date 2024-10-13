@@ -100,10 +100,11 @@ public class RoundRobin {
 
 
 
-    // Função genérica para imprimir valores de uma matriz de LinkedLists
+    // Função genérica para imprimir valores de uma matriz
     public static void printMatriz(LinkedList<LinkedList<Processo>> matriz) {
         for (int i = 0; i < matriz.size(); i++) {
             LinkedList<Processo> linha = matriz.get(i);
+            System.out.println("Linha " + i);
             for (int j = 0; j < linha.size(); j++) {
                 System.out.print("Processo " + linha.get(j).getNome() + " Prioridade: " + linha.get(j).getPrioridade() + " ");
             }
@@ -114,29 +115,32 @@ public class RoundRobin {
 
     public void execucao (){
         LinkedList<Processo> auxiliar = new LinkedList<>();
-        int tempoAtual = 1;
+        int contagemAumento = 0;
+        int contagemQuantum = 0;
+        int tempoAtual = 0;
         //prioridade atual
         int i = 0;
         //processo atual
         int j = 0;
         LinkedList<Processo> Lista = organizarProcessosPorPrioridade(listaProcessos);
         processosPorPrioridade = ordenarListasDeProcessos(processosPorPrioridade, Lista);
-        while(!processosPorPrioridade.isEmpty() || !processosPorPrioridade.getFirst().isEmpty()){
-
-            if(tempoAtual % tempoDeAumento == 0){
-
-
+        while(!processosPorPrioridade.getLast().isEmpty()){
+            if(false) {
+                System.out.println("tempo de aumento atingido, aumentando prioridade de processos");
+                processosPorPrioridade = aumentoDePrioridade(processosPorPrioridade);
+                contagemAumento = 0;
             }
+            if(contagemQuantum == quantum) {
+                System.out.println("Quantum atingido");
+                auxiliar.add(0, processosPorPrioridade.get(i).get(j));
+                processosPorPrioridade.get(i).remove(j);
+                System.out.println("Processo: " + auxiliar.get(0).getNome() + " removido do começo");
+                processosPorPrioridade.get(i).add(auxiliar.get(0));
+                auxiliar.remove(0);
+                System.out.println("Processo: " + processosPorPrioridade.get(i).getLast().getNome() + " movido ao fim da fila");
+                System.out.println("Processo no inicio: " + processosPorPrioridade.get(i).getFirst().getNome());
 
-                 if(tempoAtual % quantum == 0) {
-                    System.out.println("Quantum atingido");
-                    auxiliar.add(0, processosPorPrioridade.get(i).get(j));
-                    processosPorPrioridade.get(i).remove(j);
-                    System.out.println("Processo: " + auxiliar.get(0).getNome() + " removido do começo");
-                    processosPorPrioridade.get(i).add(auxiliar.get(0));
-                    auxiliar.remove(0);
-                    System.out.println("Processo: " + processosPorPrioridade.get(i).getLast().getNome() + " movido ao fim da fila");
-                    System.out.println("Processo no inicio: " + processosPorPrioridade.get(i).getFirst().getNome());
+                contagemQuantum = 0;
 
 
                     processosPorPrioridade.get(i).get(j).executarProcesso();
@@ -165,7 +169,10 @@ public class RoundRobin {
                 }
             }
             tempoAtual++;
+            contagemAumento++;
+            contagemQuantum++;
             System.out.println("Tempo atual: " + tempoAtual);
+
         }
     }
 
@@ -196,7 +203,10 @@ public class RoundRobin {
 
         // Limpa a última linha
         LinkedList<Processo> ultimaLinha = matriz.getLast();
-        matriz.removeLast();  // Limpa a última linha
+        for(int i = 0; i < matriz.getLast().size(); i++){
+            matriz.getLast().remove(i);
+        }
+          // Limpa a última linha
         System.out.println("Matriz aumentada");
         printMatriz(matriz);
 

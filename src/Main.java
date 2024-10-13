@@ -31,8 +31,8 @@ public class Main {
     System.out.println(matriz);
 
 
-    //r.execucao();
-        r.aumentoDePrioridade(matriz);
+        r.execucao();
+
 
 
 
